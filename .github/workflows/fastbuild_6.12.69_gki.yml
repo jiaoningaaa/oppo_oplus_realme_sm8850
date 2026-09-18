@@ -676,6 +676,7 @@ jobs:
           export KBUILD_BUILD_USER="kleaf"
           export KBUILD_BUILD_HOST="build-host"
           unset SOURCE_DATE_EPOCH
+          make mrproper &&
           make -j$(nproc --all) LLVM=1 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CC="clang" LD="ld.lld" OBJCOPY="llvm-objcopy" O=out gki_defconfig &&
           export CC="$(pwd)/cc-wrapper" && export LD="$(pwd)/ld-wrapper" &&
           KCONFIG_CONFIG=out/.config ./scripts/config --enable CONFIG_DEBUG_FS &&
