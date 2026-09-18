@@ -565,6 +565,9 @@ jobs:
         run: |
           WORKDIR="$(pwd)"
           export PATH="/usr/lib/ccache:$PATH"
+          export KBUILD_BUILD_TIMESTAMP="Mon Jul 20 18:34:35 UTC 2026"
+          export KBUILD_BUILD_USER="kleaf"
+          export KBUILD_BUILD_HOST="build-host"
           export PATH="$WORKDIR/kernel_workspace/clang19/bin:$PATH"
           export PATH="$WORKDIR/kernel_workspace/build-tools/bin:$PATH"
           export PATH="$WORKDIR/kernel_workspace/rust/bin:$PATH"
@@ -594,8 +597,8 @@ jobs:
           wget https://github.com/$GITHUB_REPOSITORY/raw/refs/heads/$GITHUB_REF_NAME/lib/libfakestat.so
           wget https://github.com/$GITHUB_REPOSITORY/raw/refs/heads/$GITHUB_REF_NAME/lib/libfaketimeMT.so
           chmod 777 ./*.so
-          export FAKESTAT="2025-05-25 12:00:00"
-          export FAKETIME="@2025-05-25 13:00:00"
+          export FAKESTAT="2026-07-20 18:34:35"
+          export FAKETIME="@2026-07-20 18:34:35"
           echo "FAKESTAT=$FAKESTAT" >> $GITHUB_ENV
           echo "FAKETIME=$FAKETIME" >> $GITHUB_ENV
           SO_DIR=$(pwd)
