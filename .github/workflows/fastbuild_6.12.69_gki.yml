@@ -678,6 +678,8 @@ jobs:
           unset SOURCE_DATE_EPOCH
           cd "${GITHUB_WORKSPACE}"
           cd "${ROOT_DIR}" || exit 1
+          rm -f .*.mod.c .*.cmd *.ko *.mod *.o *.mod.o *.symvers *.order
+          rm -rf .tmp_versions
           make mrproper || exit 1
           rm -rf out || exit 1
           make -j$(nproc --all) LLVM=1 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CC="clang" LD="ld.lld" OBJCOPY="llvm-objcopy" O=out gki_defconfig &&
@@ -688,6 +690,7 @@ jobs:
           KCONFIG_CONFIG=out/.config ./scripts/config --disable CONFIG_KALLSYMS_ALL &&
           make olddefconfig O=out &&
           make -j$(nproc --all) LLVM=1 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CC="$(pwd)/cc-wrapper" LD="$(pwd)/ld-wrapper" OBJCOPY="llvm-objcopy" O=out Image
+          test -f out/arch/arm64/boot/Image || exit 1
           
           # 编译后时间劫持二次校验
           echo "--- 编译后环境时间: $(LD_PRELOAD=$PRELOAD_LIBS date) ---"
