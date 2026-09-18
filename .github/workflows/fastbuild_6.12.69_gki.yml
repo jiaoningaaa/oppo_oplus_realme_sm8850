@@ -678,10 +678,10 @@ jobs:
           unset SOURCE_DATE_EPOCH
           make -j$(nproc --all) LLVM=1 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CC="clang" LD="ld.lld" OBJCOPY="llvm-objcopy" O=out gki_defconfig &&
           export CC="$(pwd)/cc-wrapper" && export LD="$(pwd)/ld-wrapper" &&
-          ./scripts/config --enable CONFIG_DEBUG_FS O=out &&
-          ./scripts/config --disable CONFIG_DEBUG_FS_ALLOW_ALL O=out &&
-          ./scripts/config --enable CONFIG_KALLSYMS O=out &&
-          ./scripts/config --disable CONFIG_KALLSYMS_ALL O=out &&
+          KCONFIG_CONFIG=out/.config ./scripts/config --enable CONFIG_DEBUG_FS &&
+          KCONFIG_CONFIG=out/.config ./scripts/config --disable CONFIG_DEBUG_FS_ALLOW_ALL &&
+          KCONFIG_CONFIG=out/.config ./scripts/config --enable CONFIG_KALLSYMS &&
+          KCONFIG_CONFIG=out/.config ./scripts/config --disable CONFIG_KALLSYMS_ALL &&
           make olddefconfig O=out &&
           make -j$(nproc --all) LLVM=1 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CC="$(pwd)/cc-wrapper" LD="$(pwd)/ld-wrapper" OBJCOPY="llvm-objcopy" O=out Image
           
